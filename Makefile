@@ -45,3 +45,19 @@ install: all
 test:
 	@echo "Testing installation..."
 	@bash scripts/utils/check-system.sh
+
+cleanup: check-root
+	@echo "Cleaning up unnecessary packages and services..."
+	@bash scripts/00_cleanup.sh
+
+jupyter: check-root
+	@echo "Setting up Jupyter environment..."
+	@bash scripts/08_jupyter_setup.sh
+
+ssh: check-root
+	@echo "Setting up SSH server..."
+	@bash scripts/09_ssh_setup.sh
+
+install: cleanup system nvidia docker python remote power monitoring jupyter ssh
+	@echo "Installation complete!"
+	@echo "Please reboot your system."
