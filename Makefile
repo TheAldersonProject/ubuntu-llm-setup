@@ -3,6 +3,42 @@
 
 all: system nvidia docker python remote power monitoring
 
+help:
+	@echo "Ubuntu LLM Development Environment Setup"
+	@echo ""
+	@echo "Available targets:"
+	@echo ""
+	@echo "Installation:"
+	@echo "  install     - Full system installation (recommended)"
+	@echo ""
+	@echo "Individual Components:"
+	@echo "  cleanup     - Remove unnecessary packages and services"
+	@echo "  system      - Set up base system configuration"
+	@echo "  nvidia      - Install and configure NVIDIA drivers"
+	@echo "  docker      - Set up Docker with NVIDIA support"
+	@echo "  python      - Configure Python development environment"
+	@echo "  remote      - Set up remote access (VNC/RDP)"
+	@echo "  power       - Configure power management"
+	@echo "  monitoring  - Set up system monitoring"
+	@echo "  jupyter     - Configure Jupyter Lab environment"
+	@echo "  ssh         - Set up SSH server with X11 forwarding"
+	@echo ""
+	@echo "Maintenance:"
+	@echo "  clean       - Remove temporary files"
+	@echo "  test        - Test the installation"
+	@echo ""
+	@echo "Usage:"
+	@echo "  sudo make [target]"
+	@echo ""
+	@echo "Example:"
+	@echo "  sudo make install    # Full installation"
+	@echo "  sudo make nvidia     # Only NVIDIA setup"
+	@echo ""
+	@echo "Note: Most targets require root privileges"
+
+# Make help the default target
+.DEFAULT_GOAL := help
+
 check-root:
 	@if [ $$(id -u) -ne 0 ]; then echo "Please run as root" && exit 1; fi
 
@@ -37,10 +73,6 @@ monitoring: check-root
 clean:
 	@echo "Cleaning temporary files..."
 	rm -rf /tmp/ubuntu-llm-setup-*
-
-install: all
-	@echo "Installation complete!"
-	@echo "Please reboot your system."
 
 test:
 	@echo "Testing installation..."
